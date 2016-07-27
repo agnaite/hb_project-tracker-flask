@@ -44,13 +44,29 @@ def student_add():
 @app.route('/project', methods=['GET'])
 def get_project():
     """Show information about a student."""
+    student_names = []
+    grades = []
+    usernames = []
 
     title = request.args.get('title')
     title, description, max_grade = hackbright.get_project_by_title(title)
+    student_list = hackbright.get_grades_by_title(title)
+    
+    for student in student_list:
+        first_name, last_name, github = hackbright.get_student_by_github(student[0])
+        student_names.append(first_name + " " + last_name)
+        usernames.append(github)
+        grades.append(student[1])
+
+    student_list = zip(student_names, grades, usernames)
+
     return render_template('project_info.html',
                             title=title, 
                             description=description,
-                            max_grade=max_grade)
+                            max_grade=max_grade,
+                            student_list=student_list)
+
+
 
 @app.route('/project_search')
 def get_project_form():
