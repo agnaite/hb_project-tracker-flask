@@ -1,9 +1,6 @@
-<!doctype html>
-<html>
-<head>
-    <title>Student Info</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
     <h1>{{ first }} {{ last }}</h1>
     <h2>Projects:</h2>
     <ul> 
@@ -12,5 +9,4 @@
         {% endfor %}
     </ul>
     <p>GitHub Account: {{ github }}</p>
-</body>
-</html>
+{% endblock %}

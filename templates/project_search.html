@@ -1,17 +1,10 @@
-<!doctype html>
-<html>
-<head>
-    <title>Project Tracker</title>
-</head>
+{% extends 'base.html' %}
 
-<body>
-
-<form action="/project">
-    <label>Enter project title
-        <input type="text" name="title">
-    </label>
-    <input type="submit" value="Display Project">
-</form>
-
-</body>
-</html>
+{% block content %}
+    <form action="/project">
+        <label>Enter project title
+            <input type="text" name="title">
+        </label>
+        <input type="submit" value="Display Project">
+    </form>
+{% endblock %}
