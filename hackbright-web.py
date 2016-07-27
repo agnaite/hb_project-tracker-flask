@@ -16,10 +16,13 @@ def get_student():
 
     github = request.args.get('github', 'jhacks')
     first, last, github = hackbright.get_student_by_github(github)
+    project = hackbright.get_grades_by_github(github)
     return render_template('student_info.html',
                             github=github, 
                             first=first,
-                            last=last)
+                            last=last,
+                            project=project)
+
 
 @app.route("/student_add_form")
 def student_add_form():
@@ -37,6 +40,23 @@ def student_add():
                             github=github, 
                             first=firstname,
                             last=lastname)
+
+@app.route('/project', methods=['GET'])
+def get_project():
+    """Show information about a student."""
+
+    title = request.args.get('title')
+    title, description, max_grade = hackbright.get_project_by_title(title)
+    return render_template('project_info.html',
+                            title=title, 
+                            description=description,
+                            max_grade=max_grade)
+
+@app.route('/project_search')
+def get_project_form():
+    """Show form for searching for a project."""
+
+    return render_template("project_search.html") 
 
 if __name__ == "__main__":
     hackbright.connect_to_db(app)
