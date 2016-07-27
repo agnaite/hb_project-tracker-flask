@@ -77,6 +77,22 @@ def get_project():
                             max_grade=max_grade,
                             student_list=student_list)
 
+@app.route("/project_add_form")
+def project_add_form():
+    return render_template('project_add.html')
+
+@app.route("/project_add", methods=['POST'])
+def project_add():
+    """Add a student."""
+
+    title = request.form.get('title')
+    description = request.form.get('description')
+    max_grade = request.form.get('max_grade')
+    hackbright.make_new_project(title, description, max_grade)     
+    return render_template('project_info.html',
+                            title=title, 
+                            description=description,
+                            max_grade=max_grade)
 
 @app.route('/project_search')
 def get_project_form():
