@@ -4,6 +4,17 @@ import hackbright
 
 app = Flask(__name__)
 
+@app.route("/")
+def get_home():
+
+    student_list = hackbright.get_all_students()
+    project_list = hackbright.get_all_projects()
+
+    return render_template('index.html',
+                            student_list=student_list,
+                            project_list=project_list)
+
+
 @app.route("/student_search")
 def get_student_form():
     """Show form for searching for a student."""
@@ -67,7 +78,26 @@ def get_project():
                             max_grade=max_grade,
                             student_list=student_list)
 
+@app.route("/project_add_form")
+def project_add_form():
+    return render_template('project_add.html')
 
+<<<<<<< HEAD
+@app.route("/project_add", methods=['POST'])
+def project_add():
+    """Add a student."""
+
+    title = request.form.get('title')
+    description = request.form.get('description')
+    max_grade = request.form.get('max_grade')
+    hackbright.make_new_project(title, description, max_grade)     
+    return render_template('project_info.html',
+                            title=title, 
+                            description=description,
+                            max_grade=max_grade)
+
+=======
+>>>>>>> c1d45c1f977f00d51d6efddb7b2b0c9eafa47a51
 @app.route('/project_search')
 def get_project_form():
     """Show form for searching for a project."""
