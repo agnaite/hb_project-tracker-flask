@@ -85,6 +85,7 @@ def assign_grade(github, title, grade):
 
     QUERY = """INSERT INTO Grades (student_github, project_title, grade)
                VALUES (:github, :title, :grade)"""
+    
     db_cursor = db.session.execute(QUERY, {'github': github, 'title': title, 'grade': grade})
     db.session.commit()
     print "Successfully assigned grade of %s for %s in %s" % (
@@ -92,6 +93,7 @@ def assign_grade(github, title, grade):
 
 def get_grades_by_github(github):
     """Get a list of all grades for a student by their github username"""
+    
     QUERY = """
         SELECT project_title, grade
         FROM Grades
