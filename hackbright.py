@@ -17,25 +17,29 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
 
+
 def get_all_students():
 
     QUERY = """
-    SELECT *
-    FROM Students
-    """
+        SELECT *
+        FROM Students
+        """
+
     db_cursor = db.session.execute(QUERY)
     row = db_cursor.fetchall()
     return row
 
+
 def get_all_projects():
 
     QUERY = """
-    SELECT *
-    FROM projects
-    """
+        SELECT *
+        FROM projects
+        """
+
     db_cursor = db.session.execute(QUERY)
     row = db_cursor.fetchall()
-    return row 
+    return row
 
 
 def get_student_by_github(github):
@@ -68,15 +72,13 @@ def make_new_student(first_name, last_name, github):
     db.session.commit()
     print "Successfully added student: %s %s" % (first_name, last_name)
 
-def make_new_project(title, description, max_grade):
-    """Add a new student and print confirmation.
 
-    Given a first name, last name, and GitHub account, add student to the
-    database and print a confirmation message.
-    """
+def make_new_project(title, description, max_grade):
+    """Add a new project."""
 
     QUERY = """INSERT INTO projects (title, description, max_grade)
                VALUES (:title, :description, :max_grade)"""
+
     db_cursor = db.session.execute(QUERY, {'title': title,
                                            'description': description,
                                            'max_grade': max_grade})
@@ -92,6 +94,7 @@ def get_project_by_title(title):
         FROM Projects
         WHERE title = :title
         """
+
     db_cursor = db.session.execute(QUERY, {'title': title})
     row = db_cursor.fetchone()
     print "Title: %s\nDescription: %s\nMax Grade: %d" % (row[0], row[1],
@@ -120,15 +123,16 @@ def assign_grade(github, title, grade):
 
     QUERY = """INSERT INTO Grades (student_github, project_title, grade)
                VALUES (:github, :title, :grade)"""
-    
+
     db_cursor = db.session.execute(QUERY, {'github': github, 'title': title, 'grade': grade})
     db.session.commit()
     print "Successfully assigned grade of %s for %s in %s" % (
         grade, github, title)
 
+
 def get_grades_by_github(github):
     """Get a list of all grades for a student by their github username"""
-    
+
     QUERY = """
         SELECT project_title, grade
         FROM Grades
@@ -140,6 +144,7 @@ def get_grades_by_github(github):
         print "Student %s received grade of %s for project %s" % (
             github, row[1], row[0])
     return rows
+
 
 def get_grades_by_title(title):
     """Get a list of all student grades for a project by its title"""
@@ -198,7 +203,6 @@ def handle_input():
         elif command == "project_grades":
             title = args[0]
             get_grades_by_title(title)
-
 
 
 if __name__ == "__main__":
